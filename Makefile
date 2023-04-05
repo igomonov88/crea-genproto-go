@@ -13,4 +13,6 @@ ms-users:
 		--go_opt=module=${GENPROTO_GO_MODULE} \
 		--go-grpc_out=. \
 		--go-grpc_opt=module=${GENPROTO_GO_MODULE} \
+		--grpc-gateway_opt=module=${GENPROTO_GO_MODULE} \
+        --grpc-gateway_out=. \
 		${APIS}/crea/ms-users/v1/*.proto

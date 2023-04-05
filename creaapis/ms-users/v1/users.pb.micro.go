@@ -41,19 +41,19 @@ func NewUserServiceEndpoints() []*api.Endpoint {
 		},
 		{
 			Name:    "UserService.GetUser",
-			Path:    []string{"/v1/users/{id}"},
+			Path:    []string{"/v1/users/{user_id}"},
 			Method:  []string{"GET"},
 			Handler: "rpc",
 		},
 		{
 			Name:    "UserService.UpdateUser",
-			Path:    []string{"/v1/users/{id}"},
+			Path:    []string{"/v1/users/{user_id}"},
 			Method:  []string{"PUT"},
 			Handler: "rpc",
 		},
 		{
 			Name:    "UserService.DeleteUser",
-			Path:    []string{"/v1/users/{id}"},
+			Path:    []string{"/v1/users/{user_id}"},
 			Method:  []string{"DELETE"},
 			Handler: "rpc",
 		},
@@ -149,19 +149,19 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
 		Name:    "UserService.GetUser",
-		Path:    []string{"/v1/users/{id}"},
+		Path:    []string{"/v1/users/{user_id}"},
 		Method:  []string{"GET"},
 		Handler: "rpc",
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
 		Name:    "UserService.UpdateUser",
-		Path:    []string{"/v1/users/{id}"},
+		Path:    []string{"/v1/users/{user_id}"},
 		Method:  []string{"PUT"},
 		Handler: "rpc",
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
 		Name:    "UserService.DeleteUser",
-		Path:    []string{"/v1/users/{id}"},
+		Path:    []string{"/v1/users/{user_id}"},
 		Method:  []string{"DELETE"},
 		Handler: "rpc",
 	}))
