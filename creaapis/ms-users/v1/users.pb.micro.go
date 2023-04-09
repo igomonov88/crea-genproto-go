@@ -29,30 +29,30 @@ var _ context.Context
 var _ client.Option
 var _ server.Option
 
-// Api Endpoints for UserService service
+// Api Endpoints for Users service
 
-func NewUserServiceEndpoints() []*api.Endpoint {
+func NewUsersEndpoints() []*api.Endpoint {
 	return []*api.Endpoint{
 		{
-			Name:    "UserService.CreateUser",
+			Name:    "Users.Create",
 			Path:    []string{"/v1/users"},
 			Method:  []string{"POST"},
 			Handler: "rpc",
 		},
 		{
-			Name:    "UserService.GetUser",
+			Name:    "Users.Get",
 			Path:    []string{"/v1/users/{user_id}"},
 			Method:  []string{"GET"},
 			Handler: "rpc",
 		},
 		{
-			Name:    "UserService.UpdateUser",
+			Name:    "Users.Mutate",
 			Path:    []string{"/v1/users/{user_id}"},
 			Method:  []string{"PUT"},
 			Handler: "rpc",
 		},
 		{
-			Name:    "UserService.DeleteUser",
+			Name:    "Users.Delete",
 			Path:    []string{"/v1/users/{user_id}"},
 			Method:  []string{"DELETE"},
 			Handler: "rpc",
@@ -60,29 +60,29 @@ func NewUserServiceEndpoints() []*api.Endpoint {
 	}
 }
 
-// Client API for UserService service
+// Client API for Users service
 
-type UserService interface {
-	CreateUser(ctx context.Context, in *User, opts ...client.CallOption) (*User, error)
-	GetUser(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*User, error)
-	UpdateUser(ctx context.Context, in *User, opts ...client.CallOption) (*User, error)
-	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...client.CallOption) (*emptypb.Empty, error)
+type UsersService interface {
+	Create(ctx context.Context, in *User, opts ...client.CallOption) (*User, error)
+	Get(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*User, error)
+	Mutate(ctx context.Context, in *User, opts ...client.CallOption) (*User, error)
+	Delete(ctx context.Context, in *DeleteUserRequest, opts ...client.CallOption) (*emptypb.Empty, error)
 }
 
-type userService struct {
+type usersService struct {
 	c    client.Client
 	name string
 }
 
-func NewUserService(name string, c client.Client) UserService {
-	return &userService{
+func NewUsersService(name string, c client.Client) UsersService {
+	return &usersService{
 		c:    c,
 		name: name,
 	}
 }
 
-func (c *userService) CreateUser(ctx context.Context, in *User, opts ...client.CallOption) (*User, error) {
-	req := c.c.NewRequest(c.name, "UserService.CreateUser", in)
+func (c *usersService) Create(ctx context.Context, in *User, opts ...client.CallOption) (*User, error) {
+	req := c.c.NewRequest(c.name, "Users.Create", in)
 	out := new(User)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -91,8 +91,8 @@ func (c *userService) CreateUser(ctx context.Context, in *User, opts ...client.C
 	return out, nil
 }
 
-func (c *userService) GetUser(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*User, error) {
-	req := c.c.NewRequest(c.name, "UserService.GetUser", in)
+func (c *usersService) Get(ctx context.Context, in *GetUserRequest, opts ...client.CallOption) (*User, error) {
+	req := c.c.NewRequest(c.name, "Users.Get", in)
 	out := new(User)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -101,8 +101,8 @@ func (c *userService) GetUser(ctx context.Context, in *GetUserRequest, opts ...c
 	return out, nil
 }
 
-func (c *userService) UpdateUser(ctx context.Context, in *User, opts ...client.CallOption) (*User, error) {
-	req := c.c.NewRequest(c.name, "UserService.UpdateUser", in)
+func (c *usersService) Mutate(ctx context.Context, in *User, opts ...client.CallOption) (*User, error) {
+	req := c.c.NewRequest(c.name, "Users.Mutate", in)
 	out := new(User)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -111,8 +111,8 @@ func (c *userService) UpdateUser(ctx context.Context, in *User, opts ...client.C
 	return out, nil
 }
 
-func (c *userService) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...client.CallOption) (*emptypb.Empty, error) {
-	req := c.c.NewRequest(c.name, "UserService.DeleteUser", in)
+func (c *usersService) Delete(ctx context.Context, in *DeleteUserRequest, opts ...client.CallOption) (*emptypb.Empty, error) {
+	req := c.c.NewRequest(c.name, "Users.Delete", in)
 	out := new(emptypb.Empty)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -121,69 +121,69 @@ func (c *userService) DeleteUser(ctx context.Context, in *DeleteUserRequest, opt
 	return out, nil
 }
 
-// Server API for UserService service
+// Server API for Users service
 
-type UserServiceHandler interface {
-	CreateUser(context.Context, *User, *User) error
-	GetUser(context.Context, *GetUserRequest, *User) error
-	UpdateUser(context.Context, *User, *User) error
-	DeleteUser(context.Context, *DeleteUserRequest, *emptypb.Empty) error
+type UsersHandler interface {
+	Create(context.Context, *User, *User) error
+	Get(context.Context, *GetUserRequest, *User) error
+	Mutate(context.Context, *User, *User) error
+	Delete(context.Context, *DeleteUserRequest, *emptypb.Empty) error
 }
 
-func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
-	type userService interface {
-		CreateUser(ctx context.Context, in *User, out *User) error
-		GetUser(ctx context.Context, in *GetUserRequest, out *User) error
-		UpdateUser(ctx context.Context, in *User, out *User) error
-		DeleteUser(ctx context.Context, in *DeleteUserRequest, out *emptypb.Empty) error
+func RegisterUsersHandler(s server.Server, hdlr UsersHandler, opts ...server.HandlerOption) error {
+	type users interface {
+		Create(ctx context.Context, in *User, out *User) error
+		Get(ctx context.Context, in *GetUserRequest, out *User) error
+		Mutate(ctx context.Context, in *User, out *User) error
+		Delete(ctx context.Context, in *DeleteUserRequest, out *emptypb.Empty) error
 	}
-	type UserService struct {
-		userService
+	type Users struct {
+		users
 	}
-	h := &userServiceHandler{hdlr}
+	h := &usersHandler{hdlr}
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
-		Name:    "UserService.CreateUser",
+		Name:    "Users.Create",
 		Path:    []string{"/v1/users"},
 		Method:  []string{"POST"},
 		Handler: "rpc",
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
-		Name:    "UserService.GetUser",
+		Name:    "Users.Get",
 		Path:    []string{"/v1/users/{user_id}"},
 		Method:  []string{"GET"},
 		Handler: "rpc",
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
-		Name:    "UserService.UpdateUser",
+		Name:    "Users.Mutate",
 		Path:    []string{"/v1/users/{user_id}"},
 		Method:  []string{"PUT"},
 		Handler: "rpc",
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
-		Name:    "UserService.DeleteUser",
+		Name:    "Users.Delete",
 		Path:    []string{"/v1/users/{user_id}"},
 		Method:  []string{"DELETE"},
 		Handler: "rpc",
 	}))
-	return s.Handle(s.NewHandler(&UserService{h}, opts...))
+	return s.Handle(s.NewHandler(&Users{h}, opts...))
 }
 
-type userServiceHandler struct {
-	UserServiceHandler
+type usersHandler struct {
+	UsersHandler
 }
 
-func (h *userServiceHandler) CreateUser(ctx context.Context, in *User, out *User) error {
-	return h.UserServiceHandler.CreateUser(ctx, in, out)
+func (h *usersHandler) Create(ctx context.Context, in *User, out *User) error {
+	return h.UsersHandler.Create(ctx, in, out)
 }
 
-func (h *userServiceHandler) GetUser(ctx context.Context, in *GetUserRequest, out *User) error {
-	return h.UserServiceHandler.GetUser(ctx, in, out)
+func (h *usersHandler) Get(ctx context.Context, in *GetUserRequest, out *User) error {
+	return h.UsersHandler.Get(ctx, in, out)
 }
 
-func (h *userServiceHandler) UpdateUser(ctx context.Context, in *User, out *User) error {
-	return h.UserServiceHandler.UpdateUser(ctx, in, out)
+func (h *usersHandler) Mutate(ctx context.Context, in *User, out *User) error {
+	return h.UsersHandler.Mutate(ctx, in, out)
 }
 
-func (h *userServiceHandler) DeleteUser(ctx context.Context, in *DeleteUserRequest, out *emptypb.Empty) error {
-	return h.UserServiceHandler.DeleteUser(ctx, in, out)
+func (h *usersHandler) Delete(ctx context.Context, in *DeleteUserRequest, out *emptypb.Empty) error {
+	return h.UsersHandler.Delete(ctx, in, out)
 }
